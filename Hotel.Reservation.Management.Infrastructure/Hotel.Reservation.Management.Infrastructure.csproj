@@ -14,4 +14,9 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Hotel.Reservation.Management.Domain\Hotel.Reservation.Management.Domain.csproj" />
+		<ProjectReference Include="..\Hotel.Reservation.Management.Application\Hotel.Reservation.Management.Application.csproj" />
+	</ItemGroup>
 </Project>

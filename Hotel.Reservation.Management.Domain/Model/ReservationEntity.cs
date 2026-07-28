@@ -5,6 +5,7 @@ namespace Hotel.Reservation.Management.Domain.Model
 {
     public class ReservationEntity : BaseEntity
     {
+        //Entity's Framework requires a parameterless constructor for materialization, so we provide a private one.
         private ReservationEntity()
         {
         }
