@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hotel.Reservation.Management.Application.Contracts.Request;
 
-public class CreateHotelRequest
+public class HotelRequest
 {
     public string Name { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;

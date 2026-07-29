@@ -1,0 +1,17 @@
+﻿using Hotel.Reservation.Management.API.Endpoints.Hotels;
+
+namespace Hotel.Reservation.Management.API.Endpoints
+{
+    public static class EndpointsExtensions
+    {
+        public static IEndpointRouteBuilder MapApiEndpoints(this IEndpointRouteBuilder app)
+        {
+            app.MapToCreateHotelEntity();
+            app.MapToGetAllHotels();
+            app.MapToGetHotelById();
+            app.MapToUpdateHotel();
+            app.MapToDeleteHotel();
+            return app;
+        }
+    }
+}

@@ -1,3 +1,5 @@
+using Hotel.Reservation.Management.API.Endpoints;
+using Hotel.Reservation.Management.API.Handlers;
 using Hotel.Reservation.Management.Application;
 using Hotel.Reservation.Management.Domain.Exceptions;
 using Hotel.Reservation.Management.Infrastructure;
@@ -11,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -54,5 +59,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapApiEndpoints();
 
 app.Run();
