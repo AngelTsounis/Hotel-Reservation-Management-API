@@ -11,6 +11,8 @@ public static class ApplicationDependencyInjection
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<IHotelService, HotelService>();
+        services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<IReservationService, ReservationService>();
         services.AddValidatorsFromAssemblyContaining<HotelRequestValidator>();
 
         return services;

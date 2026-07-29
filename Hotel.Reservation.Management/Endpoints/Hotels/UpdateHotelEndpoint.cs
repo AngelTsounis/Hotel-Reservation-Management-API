@@ -10,22 +10,21 @@ namespace Hotel.Reservation.Management.API.Endpoints.Hotels
     {
         public const string Name = "UpdateHotelEndpoint";
 
-        public static IEndpointRouteBuilder MapToUpdateHotel(this IEndpointRouteBuilder app)
+        public static RouteGroupBuilder MapToUpdateHotel(this RouteGroupBuilder group)
         {
-            app.MapPut("/api/hotels/{id:long}", async (long id, [FromBody] HotelRequest request, IHotelService hotelService, CancellationToken cancellationToken) =>
+            group.MapPut("/{id:long}", async (long id, [FromBody] HotelRequest request, IHotelService hotelService, CancellationToken cancellationToken) =>
             {
                 var updatedHotel = await hotelService.UpdateAsync(id, request, cancellationToken);
 
                 return Results.Ok(updatedHotel);
             })
             .WithName(Name)
-            .WithTags("Hotels")
             .AddEndpointFilter<ValidationFilter<HotelRequest>>()
             .Produces<HotelResponse>(StatusCodes.Status200OK)
             .Produces<ErrorResponse>(StatusCodes.Status400BadRequest)
             .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
 
-            return app;
+            return group;
         }
     }
 }

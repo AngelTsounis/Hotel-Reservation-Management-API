@@ -14,7 +14,9 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-        services.AddTransient<IHotelRepository, HotelRepository>();
+        services.AddScoped<IHotelRepository, HotelRepository>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IReservationRepository, ReservationRepository>();
 
         return services;
     }

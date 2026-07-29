@@ -7,20 +7,19 @@ namespace Hotel.Reservation.Management.API.Endpoints.Hotels
     {
         public const string Name = "GetHotelByIdEndpoint";
 
-        public static IEndpointRouteBuilder MapToGetHotelById(this IEndpointRouteBuilder app)
+        public static RouteGroupBuilder MapToGetHotelById(this RouteGroupBuilder group)
         {
-            app.MapGet("/api/hotels/{id:long}", async (long id, IHotelService hotelService, CancellationToken cancellationToken) =>
+            group.MapGet("/{id:long}", async (long id, IHotelService hotelService, CancellationToken cancellationToken) =>
             {
                 var hotel = await hotelService.GetByIdAsync(id, cancellationToken);
 
                 return hotel is null ? Results.NotFound() : Results.Ok(hotel);
             })
             .WithName(Name)
-            .WithTags("Hotels")
             .Produces<HotelResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
 
-            return app;
+            return group;
         }
     }
 }
