@@ -17,7 +17,9 @@ namespace Hotel.Reservation.Management.Application.Validations
 
             RuleFor(r => r.CheckInDate)
                 .NotEqual(default(DateTime))
-                .WithMessage("Check-in date is required.");
+                .WithMessage("Check-in date is required.")
+                .GreaterThanOrEqualTo(_ => DateTime.UtcNow.Date)
+                    .WithMessage("Check-in date cannot be in the past.");
 
             RuleFor(r => r.CheckOutDate)
                 .NotEqual(default(DateTime))

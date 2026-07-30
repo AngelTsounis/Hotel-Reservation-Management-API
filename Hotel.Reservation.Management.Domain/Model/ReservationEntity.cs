@@ -23,6 +23,12 @@ namespace Hotel.Reservation.Management.Domain.Model
                     "Check-out date must be after the check-in date.");
             }
 
+            if (checkOutDate <= checkInDate)
+            {
+                throw new BusinessRuleException(
+                    "Check-out date must be after the check-in date.");
+            }
+
             if (totalPrice < 0)
             {
                 throw new BusinessRuleException("Total price cannot be negative.");

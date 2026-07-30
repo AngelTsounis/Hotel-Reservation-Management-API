@@ -1,7 +1,6 @@
 ﻿using Hotel.Reservation.Management.Application.Contracts.Response;
 using Hotel.Reservation.Management.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Reservation.Management.API.Handlers
 {
@@ -19,6 +18,7 @@ namespace Hotel.Reservation.Management.API.Handlers
             var (statusCode, title) = exception switch
             {
                 NotFoundException => (StatusCodes.Status404NotFound, "Resource not found."),
+                ConflictException => (StatusCodes.Status409Conflict, "The request conflicts with the current state of the resource."),
                 BusinessRuleException => (StatusCodes.Status400BadRequest, "The request violates a business rule."),
                 _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
             };
