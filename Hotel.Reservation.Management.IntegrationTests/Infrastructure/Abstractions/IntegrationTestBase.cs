@@ -14,6 +14,12 @@ public abstract class IntegrationTestBase
 
         await DbContext.Database.ExecuteSqlRawAsync(
             """TRUNCATE TABLE "Reservations", "Hotels", "Customers" RESTART IDENTITY CASCADE;""");
+
+        OnTestInitialize();
+    }
+
+    protected virtual void OnTestInitialize()
+    {
     }
 
     [TestCleanup]

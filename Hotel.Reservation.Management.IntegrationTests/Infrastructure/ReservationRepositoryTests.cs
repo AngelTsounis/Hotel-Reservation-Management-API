@@ -14,8 +14,7 @@ public class ReservationRepositoryTests : IntegrationTestBase
 
     private static DateTime Today => DateTime.UtcNow.Date;
 
-    [TestInitialize]
-    public void Setup()
+    protected override void OnTestInitialize()
     {
         _sut = new ReservationRepository(DbContext);
     }

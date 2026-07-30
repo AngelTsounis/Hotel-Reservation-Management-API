@@ -10,8 +10,7 @@ public class CustomerRepositoryTests : IntegrationTestBase
 {
     private CustomerRepository _sut = null!;
 
-    [TestInitialize]
-    public void Setup()
+    protected override void OnTestInitialize()
     {
         _sut = new CustomerRepository(DbContext);
     }
