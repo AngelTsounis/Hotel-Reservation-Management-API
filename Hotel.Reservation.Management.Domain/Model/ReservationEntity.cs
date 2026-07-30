@@ -17,10 +17,10 @@ namespace Hotel.Reservation.Management.Domain.Model
             DateTime checkOutDate,
             decimal totalPrice)
         {
-            if (checkOutDate <= checkInDate)
+            if (checkInDate.Date < DateTime.UtcNow.Date)
             {
                 throw new BusinessRuleException(
-                    "Check-out date must be after the check-in date.");
+                    "Check-in date cannot be in the past.");
             }
 
             if (checkOutDate <= checkInDate)
