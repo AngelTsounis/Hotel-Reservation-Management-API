@@ -82,6 +82,13 @@ public class ReservationService : IReservationService
         return await _reservationRepository.CancelAsync(id, cancellationToken);
     }
 
+    public async Task<IReadOnlyList<ReservationSearchResponse>> SearchAsync(ReservationSearchRequest request, CancellationToken cancellationToken = default)
+    {
+        var reservations = await _reservationRepository.SearchAsync(request, cancellationToken);
+
+        return reservations.Select(r => r.ToReservationSearchResponse()).ToList();
+    }
+
     private async Task EnsureNoOverlappingReservationAsync(
         long customerId,
         DateTime checkInDate,

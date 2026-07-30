@@ -16,7 +16,23 @@ public static class ReservationMapping
             CheckOutDate = entity.CheckOutDate,
             TotalPrice = entity.TotalPrice,
             Status = entity.Status,
-            Nights = entity.Nights
+        };
+    }
+
+    public static ReservationSearchResponse ToReservationSearchResponse(this ReservationEntity entity)
+    {
+        return new ReservationSearchResponse
+        {
+            Id = entity.Id,
+            HotelId = entity.HotelId,
+            HotelName = entity.Hotel.Name,
+            CustomerId = entity.CustomerId,
+            CustomerName = $"{entity.Customer.FirstName} {entity.Customer.LastName}",
+            City = entity.Hotel.City,
+            CheckInDate = entity.CheckInDate,
+            CheckOutDate = entity.CheckOutDate,
+            TotalPrice = entity.TotalPrice,
+            Status = entity.Status,
         };
     }
 }

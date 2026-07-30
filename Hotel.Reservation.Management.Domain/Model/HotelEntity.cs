@@ -22,8 +22,6 @@ namespace Hotel.Reservation.Management.Domain.Model
 
         public int Stars { get; private set; }
 
-        public ICollection<ReservationEntity> Reservations { get; private set; } = [];
-
         public void Update(string name, string city, int stars)
         {
             if (string.IsNullOrWhiteSpace(name))

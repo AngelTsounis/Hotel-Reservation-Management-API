@@ -33,18 +33,17 @@ public class ReservationConfiguration : IEntityTypeConfiguration<ReservationEnti
               .HasMaxLength(20);
 
         builder.HasOne(r => r.Hotel)
-               .WithMany(h => h.Reservations)
+               .WithMany()
                .HasForeignKey(r => r.HotelId)
                .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Customer)
-               .WithMany(c => c.Reservations)
+               .WithMany()
                .HasForeignKey(r => r.CustomerId)
                .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(r => new { r.CustomerId, r.Status });
 
         builder.Ignore(r => r.IsActive);
-        builder.Ignore(r => r.Nights);
     }
 }

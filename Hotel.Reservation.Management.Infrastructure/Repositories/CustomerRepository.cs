@@ -36,5 +36,14 @@ namespace Hotel.Reservation.Management.Infrastructure.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
         }
+
+        public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken)
+        {
+            var normalizedEmail = email.Trim().ToLowerInvariant();
+
+            return await _dbContext.Customers
+                .AsNoTracking()
+                .AnyAsync(c => c.Email == normalizedEmail, cancellationToken);
+        }
     }
 }

@@ -20,8 +20,4 @@
 	</PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Endpoints\Reservations\" />
-  </ItemGroup>
-
 </Project>

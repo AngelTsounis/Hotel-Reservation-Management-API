@@ -1,5 +1,7 @@
 ﻿using Hotel.Reservation.Management.API.Endpoints.Customers;
 using Hotel.Reservation.Management.API.Endpoints.Hotels;
+using Hotel.Reservation.Management.API.Endpoints.Reservations;
+using Hotel.Reservation.Management.API.Endpoints.Search;
 
 namespace Hotel.Reservation.Management.API.Endpoints
 {
@@ -9,6 +11,8 @@ namespace Hotel.Reservation.Management.API.Endpoints
         {
             app.MapHotelEndpoints();
             app.MapCustomerEndpoints();
+            app.MapReservationEndpoints();
+            app.MapSearchEndpoints();
             return app;
         }
 
@@ -34,6 +38,28 @@ namespace Hotel.Reservation.Management.API.Endpoints
             customers.MapToCreateCustomerEndpoint();
             customers.MapToGetAllCustomersEndpoint();
             customers.MapToGetCustomerByIdEndpoint();
+
+            return app;
+        }
+
+        private static IEndpointRouteBuilder MapReservationEndpoints(this IEndpointRouteBuilder app)
+        {
+            var reservations = app.MapGroup("/api/reservations")
+                                  .WithTags("Reservations");
+
+            reservations.MapToCreateReservationEndpoint();
+            reservations.MapToGetAllReservationsEndpoint();
+            reservations.MapToGetReservationByIdEndpoint();
+            reservations.MapToCancelReservationEndpoint();
+
+            return app;
+        }
+
+        private static IEndpointRouteBuilder MapSearchEndpoints(this IEndpointRouteBuilder app)
+        {
+            var search = app.MapGroup("/api/search")
+                            .WithTags("Search");
+            search.MapToSearchReservationsEndpoint();
 
             return app;
         }

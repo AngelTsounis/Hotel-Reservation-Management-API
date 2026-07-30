@@ -11,9 +11,9 @@ public static class CustomerMapping
         return new CustomerResponse
         {
             Id = entity.Id,
-            firstName = entity.FirstName,
-            lastName = entity.LastName,
-            email = entity.Email
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
+            Email = entity.Email
         };
     }
 }

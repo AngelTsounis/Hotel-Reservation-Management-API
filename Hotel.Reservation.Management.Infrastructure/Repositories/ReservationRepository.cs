@@ -1,4 +1,5 @@
-﻿using Hotel.Reservation.Management.Application.Interfaces;
+﻿using Hotel.Reservation.Management.Application.Contracts.Request;
+using Hotel.Reservation.Management.Application.Interfaces;
 using Hotel.Reservation.Management.Domain.Enums;
 using Hotel.Reservation.Management.Domain.Model;
 using Hotel.Reservation.Management.Infrastructure.Persistence;
@@ -63,6 +64,51 @@ namespace Hotel.Reservation.Management.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return true;
+        }
+
+        public async Task<IReadOnlyList<ReservationEntity>> SearchAsync(ReservationSearchRequest request, CancellationToken cancellationToken)
+        {
+            var query = _dbContext.Reservations
+                .AsNoTracking()
+                .Include(r => r.Hotel)
+                .Include(r => r.Customer)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(request.HotelName))
+            {
+                query = query.Where(r => EF.Functions.ILike(r.Hotel.Name, $"%{request.HotelName}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.CustomerName))
+            {
+                query = query.Where(r =>
+                    EF.Functions.ILike(r.Customer.FirstName, $"%{request.CustomerName}%") ||
+                    EF.Functions.ILike(r.Customer.LastName, $"%{request.CustomerName}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.City))
+            {
+                query = query.Where(r => EF.Functions.ILike(r.Hotel.City, $"%{request.City}%"));
+            }
+
+            if (request.Status.HasValue)
+            {
+                query = query.Where(r => r.Status == request.Status.Value);
+            }
+
+            if (request.CheckIn.HasValue)
+            {
+                query = query.Where(r => r.CheckInDate >= request.CheckIn.Value.Date);
+            }
+
+            if (request.CheckOut.HasValue)
+            {
+                query = query.Where(r => r.CheckOutDate <= request.CheckOut.Value.Date);
+            }
+
+            return await query
+                .OrderBy(r => r.Id)
+                .ToListAsync(cancellationToken);
         }
     }
 }

@@ -2,13 +2,19 @@
 
 namespace Hotel.Reservation.Management.Application.Contracts.Response;
 
-public class ReservationResponse
+public class ReservationSearchResponse
 {
     public long Id { get; set; }
 
     public long HotelId { get; set; }
 
+    public string HotelName { get; set; } = string.Empty;
+
     public long CustomerId { get; set; }
+
+    public string CustomerName { get; set; } = string.Empty;
+
+    public string City { get; set; } = string.Empty;
 
     public DateTime CheckInDate { get; set; }
 
@@ -17,5 +23,4 @@ public class ReservationResponse
     public decimal TotalPrice { get; set; }
 
     public ReservationStatus Status { get; set; }
-
 }

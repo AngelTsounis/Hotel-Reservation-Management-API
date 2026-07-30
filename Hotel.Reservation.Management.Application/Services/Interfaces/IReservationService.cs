@@ -9,5 +9,6 @@ namespace Hotel.Reservation.Management.Application.Services.Interfaces
         Task<IReadOnlyList<ReservationResponse>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<ReservationResponse> GetByIdAsync(long id, CancellationToken cancellationToken = default);
         Task<bool> CancelAsync(long id, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<ReservationSearchResponse>> SearchAsync(ReservationSearchRequest request, CancellationToken cancellationToken = default);
     }
 }
