@@ -6,21 +6,20 @@ namespace Hotel.Reservation.Management.API.Endpoints.Hotels
     {
         public const string Name = "DeleteHotelEndpoint";
 
-        public static IEndpointRouteBuilder MapToDeleteHotel(this IEndpointRouteBuilder app)
+        public static RouteGroupBuilder MapToDeleteHotel(this RouteGroupBuilder group)
         {
-            app.MapDelete("/api/hotels/{id:long}", async (long id, IHotelService hotelService, CancellationToken cancellationToken) =>
+            group.MapDelete("/{id:long}", async (long id, IHotelService hotelService, CancellationToken cancellationToken) =>
             {
                 var deleted = await hotelService.DeleteAsync(id, cancellationToken);
 
                 return deleted ? Results.NoContent() : Results.NotFound();
             })
             .WithName(Name)
-            .WithTags("Hotels")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status409Conflict);
 
-            return app;
+            return group;
         }
     }
 }

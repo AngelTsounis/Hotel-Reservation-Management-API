@@ -10,21 +10,20 @@ namespace Hotel.Reservation.Management.API.Endpoints.Hotels
     {
         public const string Name = "CreateHotelEntryEndpoint";
 
-        public static IEndpointRouteBuilder MapToCreateHotelEntity(this IEndpointRouteBuilder app)
+        public static RouteGroupBuilder MapToCreateHotelEntity(this RouteGroupBuilder group)
         {
-            app.MapPost("/api/hotels", async ([FromBody] HotelRequest request, IHotelService hotelService, CancellationToken cancellationToken) =>
+            group.MapPost("/", async ([FromBody] HotelRequest request, IHotelService hotelService, CancellationToken cancellationToken) =>
             {
                 var createdHotel = await hotelService.CreateAsync(request, cancellationToken);
 
                 return Results.Created($"/api/hotels/{createdHotel.Id}", createdHotel);
             })
             .WithName(Name)
-            .WithTags("Hotels")
             .AddEndpointFilter<ValidationFilter<HotelRequest>>()
             .Produces<HotelResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest);
 
-            return app;
+            return group;
         }
     }
 }

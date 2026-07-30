@@ -26,7 +26,5 @@ public class CustomerConfiguration : IEntityTypeConfiguration<CustomerEntity>
 
         builder.HasIndex(c => c.Email)
                .IsUnique();
-
-        builder.Ignore(c => c.FullName);
     }
 }

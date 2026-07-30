@@ -36,9 +36,5 @@ namespace Hotel.Reservation.Management.Domain.Model
         public string LastName { get; private set; } = string.Empty;
 
         public string Email { get; private set; } = string.Empty;
-
-        public string FullName => $"{FirstName} {LastName}";
-
-        public ICollection<ReservationEntity> Reservations { get; private set; } = [];
     }
 }

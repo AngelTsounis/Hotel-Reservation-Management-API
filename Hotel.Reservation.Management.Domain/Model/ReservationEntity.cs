@@ -54,8 +54,6 @@ namespace Hotel.Reservation.Management.Domain.Model
 
         public bool IsActive => Status == ReservationStatus.Active;
 
-        public int Nights => (CheckOutDate - CheckInDate).Days;
-
         public bool OverlapsWith(DateTime checkIn, DateTime checkOut) =>
             IsActive &&
             CheckInDate < checkOut.Date &&
