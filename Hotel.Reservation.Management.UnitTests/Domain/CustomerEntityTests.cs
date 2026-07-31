@@ -12,17 +12,17 @@ public class CustomerEntityTests
     public void Constructor_WithValidData_TrimsAndNormalizesValues()
     {
         // Arrange
-        var firstName = "  John  ";
-        var lastName = "  Doe  ";
-        var email = "  John.DOE@Example.com  ";
+        var firstName = "  Angel  ";
+        var lastName = "  Tsounis  ";
+        var email = "  Angel.TSOUNIS@Hotmail.com  ";
 
         // Act
         var customer = new CustomerEntity(firstName, lastName, email);
 
         // Assert
-        customer.FirstName.Should().Be("John");
-        customer.LastName.Should().Be("Doe");
-        customer.Email.Should().Be("john.doe@example.com");
+        customer.FirstName.Should().Be("Angel");
+        customer.LastName.Should().Be("Tsounis");
+        customer.Email.Should().Be("angel.tsounis@hotmail.com");
     }
 
     [DataTestMethod]
@@ -31,8 +31,8 @@ public class CustomerEntityTests
     public void Constructor_WhenFirstNameIsMissing_ThrowsBusinessRuleException(string firstName)
     {
         // Arrange
-        var lastName = "Doe";
-        var email = "john@doe.com";
+        var lastName = "Tsounis";
+        var email = "angel.tsounis@hotmail.com";
 
         // Act
         var act = () => new CustomerEntity(firstName, lastName, email);
@@ -48,8 +48,8 @@ public class CustomerEntityTests
     public void Constructor_WhenLastNameIsMissing_ThrowsBusinessRuleException(string lastName)
     {
         // Arrange
-        var firstName = "John";
-        var email = "john@doe.com";
+        var firstName = "Angel";
+        var email = "angel.tsounis@hotmail.com";
 
         // Act
         var act = () => new CustomerEntity(firstName, lastName, email);
@@ -66,7 +66,7 @@ public class CustomerEntityTests
         var invalidEmail = "not-an-email";
 
         // Act
-        var act = () => new CustomerEntity("John", "Doe", invalidEmail);
+        var act = () => new CustomerEntity("Angel", "Tsounis", invalidEmail);
 
         // Assert
         act.Should().Throw<BusinessRuleException>()

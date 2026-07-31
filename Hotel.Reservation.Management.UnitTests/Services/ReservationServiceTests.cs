@@ -35,7 +35,7 @@ public class ReservationServiceTests
 
         _customerRepository
             .Setup(r => r.GetByIdAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new CustomerEntity("John", "Doe", "john.doe@example.com"));
+            .ReturnsAsync(new CustomerEntity("Angel", "Tsounis", "angel.tsounis@hotmail.com"));
 
         _reservationRepository
             .Setup(r => r.GetStatusActiveByCustomerAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))

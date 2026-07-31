@@ -20,11 +20,11 @@ public class ReservationRepositoryTests : IntegrationTestBase
     }
 
     private async Task<(HotelEntity Hotel, CustomerEntity Customer)> SeedHotelAndCustomerAsync(
-        string hotelName = "Hilton Athens",
-        string city = "Athens",
-        string firstName = "John",
-        string lastName = "Doe",
-        string email = "john.doe@example.com")
+     string hotelName = "Hilton Athens",
+     string city = "Athens",
+     string firstName = "Angel",
+     string lastName = "Tsounis",
+     string email = "angel.tsounis@hotmail.com")
     {
         var hotel = new HotelEntity(hotelName, city, 5);
         var customer = new CustomerEntity(firstName, lastName, email);

@@ -30,9 +30,9 @@ public class CustomerRequestValidatorTests
 
     private static CustomerRequest CreateValidRequest() => new()
     {
-        FirstName = "John",
-        LastName = "Doe",
-        Email = "john.doe@example.com"
+        FirstName = "Angel",
+        LastName = "Tsounis",
+        Email = "angel.tsounis@hotmail.com"
     };
 
     [TestMethod]

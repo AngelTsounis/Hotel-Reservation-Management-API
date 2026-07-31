@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hotel.Reservation.Management.Domain.Exceptions;
+﻿namespace Hotel.Reservation.Management.Domain.Exceptions;
 
 public abstract class DomainException(string message) : Exception(message);
 

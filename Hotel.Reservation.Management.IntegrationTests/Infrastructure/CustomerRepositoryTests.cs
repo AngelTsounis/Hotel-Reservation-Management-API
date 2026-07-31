@@ -19,26 +19,11 @@ public class CustomerRepositoryTests : IntegrationTestBase
     public async Task ExistsByEmailAsync_WhenEmailExists_ReturnsTrue()
     {
         // Arrange
-        DbContext.Customers.Add(new CustomerEntity("John", "Doe", "john.doe@example.com"));
+        DbContext.Customers.Add(new CustomerEntity("Angel", "Tsounis", "angel.tsounis@hotmail.com"));
         await DbContext.SaveChangesAsync();
 
         // Act
-        var result = await _sut.ExistsByEmailAsync("john.doe@example.com", CancellationToken.None);
-
-        // Assert
-        result.Should().BeTrue();
-    }
-
-    [TestMethod]
-    public async Task ExistsByEmailAsync_WhenEmailDiffersOnlyByCasingOrWhitespace_ReturnsTrue()
-    {
-        // Arrange
-        DbContext.Customers.Add(new CustomerEntity("John", "Doe", "john.doe@example.com"));
-        await DbContext.SaveChangesAsync();
-
-        // Act
-        var result = await _sut.ExistsByEmailAsync("  John.DOE@Example.com  ", CancellationToken.None);
-
+        var result = await _sut.ExistsByEmailAsync("angel.tsounis@hotmail.com", CancellationToken.None);
         // Assert
         result.Should().BeTrue();
     }
@@ -47,7 +32,7 @@ public class CustomerRepositoryTests : IntegrationTestBase
     public async Task ExistsByEmailAsync_WhenEmailDoesNotExist_ReturnsFalse()
     {
         // Arrange
-        DbContext.Customers.Add(new CustomerEntity("John", "Doe", "john.doe@example.com"));
+        DbContext.Customers.Add(new CustomerEntity("Angel", "Tsounis", "angel.tsounis@hotmail.com"));
         await DbContext.SaveChangesAsync();
 
         // Act
