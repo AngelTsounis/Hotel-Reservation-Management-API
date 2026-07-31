@@ -33,20 +33,6 @@ public class ReservationEntityTests
     }
 
     [TestMethod]
-    public void Constructor_WhenCheckInIsInThePast_ThrowsBusinessRuleException()
-    {
-        // Arrange
-        var pastCheckInDate = Today.AddDays(-1);
-
-        // Act
-        var act = () => new ReservationEntity(1, 1, pastCheckInDate, Today.AddDays(2), 100m);
-
-        // Assert
-        act.Should().Throw<BusinessRuleException>()
-            .WithMessage("Check-in date cannot be in the past.");
-    }
-
-    [TestMethod]
     public void Constructor_WhenCheckOutIsNotAfterCheckIn_ThrowsBusinessRuleException()
     {
         // Arrange

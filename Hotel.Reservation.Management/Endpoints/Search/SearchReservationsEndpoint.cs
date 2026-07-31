@@ -10,7 +10,7 @@ namespace Hotel.Reservation.Management.API.Endpoints.Search
 
         public static RouteGroupBuilder MapToSearchReservationsEndpoint(this RouteGroupBuilder group)
         {
-            group.MapGet("/search", async ([AsParameters] ReservationSearchRequest request, IReservationService reservationService, CancellationToken cancellationToken) =>
+            group.MapGet("/", async ([AsParameters] ReservationSearchRequest request, IReservationService reservationService, CancellationToken cancellationToken) =>
             {
                 var reservations = await reservationService.SearchAsync(request, cancellationToken);
 

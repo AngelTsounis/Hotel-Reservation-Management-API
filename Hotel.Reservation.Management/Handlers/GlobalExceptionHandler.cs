@@ -15,15 +15,31 @@ namespace Hotel.Reservation.Management.API.Handlers
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken = default)
         {
-            var (statusCode, title) = exception switch
+            var statusCode = exception switch
             {
-                NotFoundException => (StatusCodes.Status404NotFound, "Resource not found."),
-                ConflictException => (StatusCodes.Status409Conflict, "The request conflicts with the current state of the resource."),
-                BusinessRuleException => (StatusCodes.Status400BadRequest, "The request violates a business rule."),
-                _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
+                NotFoundException => StatusCodes.Status404NotFound,
+                ConflictException => StatusCodes.Status409Conflict,
+                BusinessRuleException => StatusCodes.Status400BadRequest,
+                BadHttpRequestException => StatusCodes.Status400BadRequest,
+                _ => StatusCodes.Status500InternalServerError
             };
 
-            _logger.LogError(exception, "An exception occured. Path: {Path}, Method:{Method}, Message:{Message}", httpContext.Request.Path, httpContext.Request.Method, exception.Message);
+            if (statusCode == StatusCodes.Status500InternalServerError)
+            {
+                _logger.LogError(exception,
+                    "Unhandled exception. Path: {Path}, Method: {Method}",
+                    httpContext.Request.Path,
+                    httpContext.Request.Method);
+            }
+            else
+            {
+                _logger.LogWarning(
+                    "Request rejected with {StatusCode}. Path: {Path}, Method: {Method}, Reason: {Reason}",
+                    statusCode,
+                    httpContext.Request.Path,
+                    httpContext.Request.Method,
+                    exception.Message);
+            }
 
             var errorResponse = new ErrorResponse
             {

@@ -19,7 +19,7 @@ public class CustomerService : ICustomerService
 
     public async Task<CustomerResponse> CreateAsync(CustomerRequest request, CancellationToken cancellationToken = default)
     {
-        var customer = new CustomerEntity(request.firstName, request.lastName, request.email);
+        var customer = new CustomerEntity(request.FirstName, request.LastName, request.Email);
 
         var customerCreated = await _customerRepository.CreateAsync(customer, cancellationToken); 
         

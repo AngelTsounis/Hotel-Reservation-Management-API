@@ -21,7 +21,7 @@ namespace Hotel.Reservation.Management.Infrastructure.Repositories
             return hotel;
         }
 
-        public async Task<List<HotelEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<HotelEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _dbContext.Hotels
                 .AsNoTracking()
@@ -32,7 +32,6 @@ namespace Hotel.Reservation.Management.Infrastructure.Repositories
         public async Task<HotelEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Hotels
-                .AsNoTracking()
                 .FirstOrDefaultAsync(h => h.Id == id, cancellationToken);
         }
 
@@ -50,6 +49,13 @@ namespace Hotel.Reservation.Management.Infrastructure.Repositories
                 .ExecuteDeleteAsync(cancellationToken);
 
             return rowsAffected > 0;
+        }
+
+        public async Task<bool> HasReservationsAsync(long hotelId, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Reservations
+                .AsNoTracking()
+                .AnyAsync(r => r.HotelId == hotelId, cancellationToken);
         }
     }
 }

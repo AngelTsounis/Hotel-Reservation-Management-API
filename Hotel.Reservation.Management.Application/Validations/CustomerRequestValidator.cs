@@ -12,21 +12,21 @@ namespace Hotel.Reservation.Management.Application.Validations
         {
             _customerRepository = customerRepository;
 
-            RuleFor(r => r.firstName)
+            RuleFor(r => r.FirstName)
                 .NotEmpty()
                 .WithMessage("Customer first name is required.");
 
-            RuleFor(r => r.lastName)
+            RuleFor(r => r.LastName)
                 .NotEmpty()
                 .WithMessage("Customer last name is required.");
  
-            RuleFor(r => r.email)
+            RuleFor(r => r.Email)
                 .NotEmpty()
                 .WithMessage("Customer email is required.")
                 .EmailAddress()
                 .WithMessage("Customer email must be a valid email address.")
                 .MustAsync(BeUniqueEmailAsync)
-                .WithMessage(r => $"A customer with email '{r.email}' already exists.");
+                .WithMessage(r => $"A customer with email '{r.Email}' already exists.");
         }
 
         private async Task<bool> BeUniqueEmailAsync(string email, CancellationToken cancellationToken)

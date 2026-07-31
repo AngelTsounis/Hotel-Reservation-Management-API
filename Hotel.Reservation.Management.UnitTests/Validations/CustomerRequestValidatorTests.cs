@@ -30,9 +30,9 @@ public class CustomerRequestValidatorTests
 
     private static CustomerRequest CreateValidRequest() => new()
     {
-        firstName = "John",
-        lastName = "Doe",
-        email = "john.doe@example.com"
+        FirstName = "John",
+        LastName = "Doe",
+        Email = "john.doe@example.com"
     };
 
     [TestMethod]
@@ -56,7 +56,7 @@ public class CustomerRequestValidatorTests
     {
         // Arrange
         var request = CreateValidRequest();
-        request.firstName = firstName;
+        request.FirstName = firstName;
 
         // Act
         var result = await _sut.ValidateAsync(request);
@@ -73,7 +73,7 @@ public class CustomerRequestValidatorTests
     {
         // Arrange
         var request = CreateValidRequest();
-        request.lastName = lastName;
+        request.LastName = lastName;
 
         // Act
         var result = await _sut.ValidateAsync(request);
@@ -88,7 +88,7 @@ public class CustomerRequestValidatorTests
     {
         // Arrange
         var request = CreateValidRequest();
-        request.email = "not-an-email";
+        request.Email = "not-an-email";
 
         // Act
         var result = await _sut.ValidateAsync(request);
@@ -105,7 +105,7 @@ public class CustomerRequestValidatorTests
         var request = CreateValidRequest();
 
         _customerRepository
-            .Setup(r => r.ExistsByEmailAsync(request.email, It.IsAny<CancellationToken>()))
+            .Setup(r => r.ExistsByEmailAsync(request.Email, It.IsAny<CancellationToken>()))
             .ReturnsAsync(true);
 
         // Act
@@ -114,7 +114,7 @@ public class CustomerRequestValidatorTests
         // Assert
         result.IsValid.Should().BeFalse();
         result.Errors.Should().Contain(e =>
-            e.ErrorMessage == $"A customer with email '{request.email}' already exists.");
+            e.ErrorMessage == $"A customer with email '{request.Email}' already exists.");
     }
 
     [TestMethod]
@@ -128,7 +128,7 @@ public class CustomerRequestValidatorTests
 
         // Assert
         _customerRepository.Verify(
-            r => r.ExistsByEmailAsync(request.email, It.IsAny<CancellationToken>()),
+            r => r.ExistsByEmailAsync(request.Email, It.IsAny<CancellationToken>()),
             Times.Once);
         result.IsValid.Should().BeTrue();
     }

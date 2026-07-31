@@ -63,6 +63,19 @@ namespace Hotel.Reservation.Management.Application.Services.Implementations
 
         public async Task<bool> DeleteAsync(long id, CancellationToken cancellationToken = default)
         {
+            var hotel = await _hotelRepository.GetByIdAsync(id, cancellationToken);
+
+            if (hotel is null)
+            {
+                return false;
+            }
+
+            if (await _hotelRepository.HasReservationsAsync(id, cancellationToken))
+            {
+                throw new ConflictException(
+                    $"Hotel with ID {id} cannot be deleted because it has existing reservations.");
+            }
+
             return await _hotelRepository.DeleteAsync(id, cancellationToken);
         }
     }
