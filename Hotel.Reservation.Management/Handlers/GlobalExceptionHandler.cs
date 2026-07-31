@@ -23,11 +23,7 @@ namespace Hotel.Reservation.Management.API.Handlers
                 _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred.")
             };
 
-            _logger.LogError(exception,
-                    "An exception occured. Path: {Path}, Method:{Method}, Message:{Message}",
-                    httpContext.Request.Path,
-                    httpContext.Request.Method,
-                    exception.Message);
+            _logger.LogError(exception, "An exception occured. Path: {Path}, Method:{Method}, Message:{Message}", httpContext.Request.Path, httpContext.Request.Method, exception.Message);
 
             var errorResponse = new ErrorResponse
             {
