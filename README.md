@@ -94,6 +94,51 @@ Migrations run automatically at startup via `Database.MigrateAsync()`, so no man
 
 ---
 
+## API endpoints
+
+### Hotels
+
+| Method | Route | Description | Success | Errors |
+|---|---|---|---|---|
+| `POST` | `/api/hotels` | Create a hotel | `201 Created` | `400` |
+| `GET` | `/api/hotels` | List all hotels | `200 OK` | — |
+| `GET` | `/api/hotels/{id}` | Get a hotel by ID | `200 OK` | `404` |
+| `PUT` | `/api/hotels/{id}` | Update a hotel | `200 OK` | `400`, `404` |
+| `DELETE` | `/api/hotels/{id}` | Delete a hotel | `204 No Content` | `404`, `409` |
+
+`DELETE` returns `409 Conflict` if the hotel has existing reservations.
+
+### Customers
+
+| Method | Route | Description | Success | Errors |
+|---|---|---|---|---|
+| `POST` | `/api/customer` | Create a customer | `201 Created` | `400`, `409` |
+| `GET` | `/api/customer` | List all customers | `200 OK` | — |
+| `GET` | `/api/customer/{id}` | Get a customer by ID | `200 OK` | `404` |
+
+`POST` returns `409 Conflict` if the email is already registered.
+
+### Reservations
+
+| Method | Route | Description | Success | Errors |
+|---|---|---|---|---|
+| `POST` | `/api/reservations` | Create a reservation | `201 Created` | `400`, `404`, `409` |
+| `GET` | `/api/reservations` | List all reservations | `200 OK` | — |
+| `GET` | `/api/reservations/{id}` | Get a reservation by ID | `200 OK` | `404` |
+| `DELETE` | `/api/reservations/{id}` | Cancel a reservation (logical) | `204 No Content` | `404` |
+
+`POST` returns `404` if the hotel or customer does not exist, and `409` if the customer already has an active reservation overlapping the requested dates.
+
+`DELETE` performs a **logical cancellation** — the record is retained with status `Cancelled`.
+
+### Search
+
+| Method | Route | Description | Success |
+|---|---|---|---|
+| `GET` | `/api/search/search` | Search reservations with optional filters | `200 OK` |
+
+---
+
 ## Running the tests
 
 ### Unit tests
@@ -231,22 +276,6 @@ Example:
 ```
 
 ---
-
-## Architecture
-
-```
-Hotel.Reservation.Management                 API — minimal API endpoints, filters, exception handling
-Hotel.Reservation.Management.Application     Services, DTOs, mapping, validators, repository interfaces
-Hotel.Reservation.Management.Domain          Entities, enums, domain exceptions
-Hotel.Reservation.Management.Infrastructure  EF Core, repositories, configurations, migrations
-```
-
-Dependencies point inwards: `API → Application → Domain`, with `Infrastructure` implementing the interfaces defined in `Application`. The domain layer has no external dependencies.
-
-Business rules are enforced as invariants inside the domain entities, so an entity cannot be constructed in an invalid state regardless of which layer creates it.
-
----
-
 
 ## SQL Challenges
 
